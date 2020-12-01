@@ -13,6 +13,7 @@ bot = Bot(token=bot_token)
 dp = Dispatcher(bot)
 
 
+# обработчик всех сообщений и команд в чате с ботом - если бот работает, он отвечает
 @dp.message_handler()
 async def process_bot_check(message: types.Message):
     await message.reply("bruh im working")
