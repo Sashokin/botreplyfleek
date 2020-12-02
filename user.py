@@ -22,5 +22,4 @@ from config import username_aslan, api_id_aslan, api_hash_aslan, api_id_alex, ap
 client = TelegramClient(username_aslan, api_id_aslan, api_hash_aslan)
 client.start()
 
-print(client.get_me().stringify())
 
