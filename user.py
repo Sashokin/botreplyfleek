@@ -20,4 +20,3 @@ from config import api_id_alex, api_hash_alex, api_hash_main, api_id_main, id_ma
 client = TelegramClient(username_main, api_id_main, api_hash_main)
 #client = TelegramClient(username_alex, api_id_alex, api_hash_alex)
 client.start()
-
