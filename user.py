@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import configparser
 import json
-from telethon.sync import TelegramClient
-from telethon import connection
+from telethon import TelegramClient, sync
+from telethon import connection, utils
 
-# todo: {как передавать id канала, чтоб работать с ним}, {реализовать получение новых сообщений},
-#  {реализовать постинг уведомления о сообщении в канал}, {залить на сервер}, {реализовать постинг сообщений текстовых},
+# todo: {реализовать получение новых сообщений}, {реализовать постинг уведомления о сообщении в канал},
+#  {залить на сервер}, {реализовать постинг сообщений текстовых},
 #  {реализовать скан edit собщения}, {реализовать постинг сообщений с картинкой/файлом}
 
 # для корректного переноса времени сообщений в json
@@ -18,13 +18,18 @@ from telethon.tl.types import ChannelParticipantsSearch
 # класс для работы с сообщениями
 from telethon.tl.functions.messages import GetHistoryRequest
 
-from config import username_aslan, api_id_aslan, api_hash_aslan, id_aslan, api_id_alex, api_hash_alex, api_hash_main, api_id_main, id_main, id_alex, username_main, username_alex
-from config import url_testchannel, id_testchannel, peer_id_testchannel
+# chat getter
+from telethon.tl.custom.chatgetter import ChatGetter
 
 
-client = TelegramClient(username_main, api_id_main, api_hash_main)
-# client = TelegramClient(username_alex, api_id_alex, api_hash_alex)
-# client = TelegramClient(username_aslan, api_id_aslan, api_hash_aslan)
+from config import username_aslan, api_id_aslan, api_hash_aslan, id_aslan, api_id_alex, api_hash_alex, api_hash_main, api_id_main, id_main, id_alex, username_main, username_alex, api_id_anton, id_anton, api_hash_anton, username_anton
+from config import id_testchannel, id_fleek
+
+
+client = TelegramClient(username_anton, api_id_anton, api_hash_anton)  # аккаунт Антона
+# client = TelegramClient(username_main, api_id_main, api_hash_main)  # Саша основной ак
+# client = TelegramClient(username_alex, api_id_alex, api_hash_alex)  # Саша второй ак
+# client = TelegramClient(username_aslan, api_id_aslan, api_hash_aslan)  # Аслан
 client.start()
 
 
@@ -61,18 +66,23 @@ async def dump_all_messages(channel):
             json.dump(all_messages, outfile, ensure_ascii=False, cls=DateTimeEncoder)
 
 
+async def send_message_to_channel(channel, message):
+    await client.send_message(channel, message)
+
+
 async def main():
-    channel = await client.get_entity(url_testchannel)  # как делать с id, а не url :/
-    # await dump_all_messages(channel)
+    channel = await client.get_entity(id_fleek)  # для id - int, для ссылок - str
+    # await send_message_to_channel(channel, 'test message')
+    await dump_all_messages(channel)
 
 
 # выключение, пока не закончится процесс в main
-# with client:
-    # client.loop.run_until_complete(main())
+with client:
+    client.loop.run_until_complete(main())
 
 
 # выключение по завершению процесса в пичарме
-with client:
-    client.run_until_disconnected()
+# with client:
+    # client.run_until_disconnected()
 
 # не решил, что нам лучше, поэтому оставил 2 варианта
