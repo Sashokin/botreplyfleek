@@ -131,3 +131,4 @@ config.py
 *.xml
 *.iml
 *.session
+.DS_Store
