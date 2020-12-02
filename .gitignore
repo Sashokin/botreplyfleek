@@ -132,3 +132,4 @@ config.py
 *.iml
 *.session
 .DS_Store
+*.session-journal
