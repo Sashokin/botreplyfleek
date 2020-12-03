@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import configparser
 import json
-from telethon import TelegramClient, sync
-from telethon import connection, utils
+from telethon.sync import TelegramClient
+from telethon import connection, utils, events
 
 # todo: {реализовать получение новых сообщений}, {реализовать постинг уведомления о сообщении в канал},
 #  {залить на сервер}, {реализовать постинг сообщений текстовых},
@@ -10,10 +10,6 @@ from telethon import connection, utils
 
 # для корректного переноса времени сообщений в json
 from datetime import date, datetime
-
-# классы для работы с каналами
-from telethon.tl.functions.channels import GetParticipantsRequest
-from telethon.tl.types import ChannelParticipantsSearch
 
 # класс для работы с сообщениями
 from telethon.tl.functions.messages import GetHistoryRequest
@@ -23,7 +19,7 @@ from telethon.tl.custom.chatgetter import ChatGetter
 
 
 from config import username_aslan, api_id_aslan, api_hash_aslan, id_aslan, api_id_alex, api_hash_alex, api_hash_main, api_id_main, id_main, id_alex, username_main, username_alex, api_id_anton, id_anton, api_hash_anton, username_anton
-from config import id_testchannel, id_fleek
+from config import id_testchannel, id_fleek, id_leakchannel
 
 
 client = TelegramClient(username_anton, api_id_anton, api_hash_anton)  # аккаунт Антона
@@ -31,6 +27,17 @@ client = TelegramClient(username_anton, api_id_anton, api_hash_anton)  # акк�
 # client = TelegramClient(username_alex, api_id_alex, api_hash_alex)  # Саша второй ак
 # client = TelegramClient(username_aslan, api_id_aslan, api_hash_aslan)  # Аслан
 client.start()
+
+
+# Обработчик новых сообщений
+@client.on(events.NewMessage(chats=id_fleek))
+async def handler_new_message(event):
+    try:
+        await client.send_message(id_leakchannel, event.message)
+        # либо репост
+        # await client.forward_messages(id_leakchannel, event.message)
+    except Exception as e:
+        print(e)
 
 
 # Записывает json-файл с информацией о всех сообщениях канала
@@ -73,16 +80,16 @@ async def send_message_to_channel(channel, message):
 async def main():
     channel = await client.get_entity(id_fleek)  # для id - int, для ссылок - str
     # await send_message_to_channel(channel, 'test message')
-    await dump_all_messages(channel)
+    #await dump_all_messages(channel)
 
 
 # выключение, пока не закончится процесс в main
-with client:
-    client.loop.run_until_complete(main())
+# with client:
+    # client.loop.run_until_complete(main())
 
 
 # выключение по завершению процесса в пичарме
-# with client:
-    # client.run_until_disconnected()
+with client:
+    client.run_until_disconnected()
 
 # не решил, что нам лучше, поэтому оставил 2 варианта
