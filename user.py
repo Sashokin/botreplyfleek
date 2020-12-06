@@ -3,6 +3,7 @@ from telethon.sync import TelegramClient
 from telethon import events
 
 # todo: {залить на сервер}, {реализовать скан edit собщения}
+# todo сервер: зарегистрировался, установил пип, установил requirements. Осталось: загрузить конфиг, запустить бота
 
 from config import username_aslan, api_id_aslan, api_hash_aslan, id_aslan, api_id_alex, api_hash_alex, api_hash_main, \
     api_id_main, id_main, id_alex, username_main, username_alex, api_id_anton, id_anton, api_hash_anton, username_anton
