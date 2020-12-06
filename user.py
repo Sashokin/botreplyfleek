@@ -3,7 +3,7 @@ from telethon.sync import TelegramClient
 from telethon import events
 
 # todo: {залить на сервер}, {реализовать скан edit собщения}
-# todo сервер: зарегистрировался, установил пип, установил requirements. Осталось: загрузить конфиг, запустить бота
+# todo сервер: зарегистрировался, установил пип, установил requirements, загрузил конфиг. Осталось: запустить фоновую работу бота
 
 from config import username_aslan, api_id_aslan, api_hash_aslan, id_aslan, api_id_alex, api_hash_alex, api_hash_main, \
     api_id_main, id_main, id_alex, username_main, username_alex, api_id_anton, id_anton, api_hash_anton, username_anton
@@ -34,7 +34,7 @@ async def send_message_to_channel(channel, message):
 
 async def main():
     channel = await client.get_entity(id_fleek)  # для id - int, для ссылок - str
-    # await send_message_to_channel(channel, 'test message')
+    await send_message_to_channel(channel, 'Тестовое сообщение, чтоьы проверить работу бота')
 
 
 # выключение по завершению процесса в пичарме
