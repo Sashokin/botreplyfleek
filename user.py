@@ -7,8 +7,6 @@ from telethon import events
 
 from config import username_aslan, api_id_aslan, api_hash_aslan, id_aslan, api_id_alex, api_hash_alex, api_hash_main, \
     api_id_main, id_main, id_alex, username_main, username_alex, api_id_anton, id_anton, api_hash_anton, username_anton
-from config import id_fleek, id_leakchannel
-
 
 client = TelegramClient(username_anton, api_id_anton, api_hash_anton)  # аккаунт Антона
 # client = TelegramClient(username_main, api_id_main, api_hash_main)  # Саша основной ак
@@ -33,7 +31,6 @@ async def send_message_to_channel(channel, message):
 
 
 async def main():
-    channel = await client.get_entity(id_fleek)  # для id - int, для ссылок - str
     # await send_message_to_channel(channel, 'test message')
 
 
