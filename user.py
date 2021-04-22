@@ -4,7 +4,7 @@ from telethon import events
 
 # todo: {реализовать скан edit собщения}
 
-from config import api_id_anton, id_anton, api_hash_anton, username_anton
+from config import api_id_anton, api_hash_anton, username_anton
 from config import id_fleek, id_leakchannel, id_testchannel, id_tesla
 
 client = TelegramClient(username_anton, api_id_anton, api_hash_anton)  # аккаунт Антона
