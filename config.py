@@ -23,6 +23,8 @@ id_testchannel = -1001340694970
 id_leakchannel = -1001359483835
 id_fleek = -1001169026621
 id_tesla = -1001283065049
+id_new_leak = -1001415294900
+id_clever = -1001742685077
 
 
 DATABASE_URL = ''
